@@ -11,7 +11,7 @@ handyJS.file.getExtension = function (fileName) {
 
 //usage: changeFileName('ding.js', 'dong'); => dong.js
 handyJS.file.changeName = function (originalName, newName) {
-	var extension = this.getFileExtension(originalName);
+	var extension = this.getExtension(originalName);
 	return newName + '.' + extension;
 };
 
