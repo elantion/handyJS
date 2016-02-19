@@ -1,0 +1,22 @@
+{
+  "name": "handyjs",
+  "description": "A set of useful JavaScript functions",
+  "main": "browser/handy.min.js",
+  "authors": [
+    "JamesYin"
+  ],
+  "version": "1.0.0",
+  "license": "MIT",
+  "keywords": [
+    "Utility"
+  ],
+  "homepage": "https://github.com/elantion/handyJS",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

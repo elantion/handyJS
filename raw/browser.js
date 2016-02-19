@@ -1,2 +1,3 @@
 'use strict';
-//=include ./both.js
+var handyJS = {};
+//=include ./both/*.js
