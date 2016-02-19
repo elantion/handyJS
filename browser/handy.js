@@ -1,6 +1,6 @@
 'use strict';
 
-var util = {};
+var handyJS = {};
 //All bout file manipulate
 util.file = {};
 

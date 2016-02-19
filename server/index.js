@@ -1,5 +1,5 @@
 'use strict';
-var util = {};
+var handyJS = {};
 //All bout file manipulate
 util.file = {};
 
@@ -16,4 +16,4 @@ util.file.changeFileName = function (originalName, newName) {
 };
 
 
-module.exports = util;
+module.exports = handyJS;
