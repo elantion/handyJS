@@ -1,36 +1,8 @@
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-var handyJS = {};
-//All bout file manipulate
-handyJS.file = {};
-
-// sources:
-// http://stackoverflow.com/questions/190852/how-can-i-get-file-extensions-with-javascript
-handyJS.file.getExtension = function (fileName) {
-	return fileName.slice((Math.max(0, fileName.lastIndexOf('.')) || Infinity) + 1);
-};
-
-//usage: changeFileName('ding.js', 'dong'); => dong.js
-handyJS.file.changeName = function (originalName, newName) {
-	var extension = this.getExtension(originalName);
-	return newName + '.' + extension;
-};
-
-handyJS.string = {};
-//remove whitespace, tab and new line
-handyJS.string.removeAllSpace = function (string) {
-	return string.replace(/\s/g, '');
-};
-//only remove whitespace
-handyJS.string.removeWhitespace = function (string) {
-	return string.replace(/ /g, '');
-};
 handyJS.ajax = {};
 handyJS.ajax.request = function (options) {
 	var self = this;
-	var blankFun = function blankFun() {};
+	var blankFun = function () {
+	};
 	self.xhr = new XMLHttpRequest();
 	if (options.method === undefined) {
 		options.method = 'GET';
@@ -52,7 +24,7 @@ handyJS.ajax.request = function (options) {
 			options.data.forEach(function (segment) {
 				if (segment === null) {
 					throw Error('Do not send null variable.');
-				} else if ((typeof segment === 'undefined' ? 'undefined' : _typeof(segment)) === 'object') {
+				} else if (typeof segment === 'object') {
 					for (var key in segment) {
 						if (segment.hasOwnProperty(key)) {
 							if (segment[key] === undefined) {
@@ -64,7 +36,8 @@ handyJS.ajax.request = function (options) {
 									break;
 								}
 								if (options.enctype.toUpperCase() !== 'FORMDATA') {
-									throw Error('You have to set dataForm to \'FormData\'' + ' because you about to send file, or just ignore this property.');
+									throw Error('You have to set dataForm to \'FormData\'' +
+										' because you about to send file, or just ignore this property.');
 								}
 							}
 							if (options.enctype === undefined) {
@@ -81,15 +54,15 @@ handyJS.ajax.request = function (options) {
 		}
 	}
 	//transform some type of value
-	var transformValue = function transformValue(value) {
+	var transformValue = function (value) {
 		if (value === null) {
 			return '';
 		}
 		if (value === undefined) {
 			return '';
 		}
-		switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
-			case 'object':
+		switch (typeof value) {
+			case 'object' :
 				if (value instanceof Blob) {
 					return value;
 				} else {
@@ -98,13 +71,13 @@ handyJS.ajax.request = function (options) {
 				break;
 			case 'string':
 				return value;
-			default:
+			default :
 				return value;
 		}
 	};
 	//encode uri string
 	//Copied from MDN, if wrong, pls info me.
-	var encodeUriStr = function encodeUriStr(str) {
+	var encodeUriStr = function (str) {
 		return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
 			return '%' + c.charCodeAt(0).toString(16);
 		});
@@ -130,16 +103,16 @@ handyJS.ajax.request = function (options) {
 			console.log('Encode data as FormData type.');
 			options.segments = new FormData();
 			options.data.forEach(function (segment) {
-				if (segment.fileName) {
-					for (var key in segment) {
+				if(segment.fileName){
+					for (let key in segment) {
 						if (segment.hasOwnProperty(key)) {
-							if (key !== 'fileName') {
+							if(key !== 'fileName'){
 								options.segments.append(key, segment[key], segment.fileName);
 							}
 						}
 					}
-				} else {
-					for (var key in segment) {
+				}else{
+					for (let key in segment) {
 						if (segment.hasOwnProperty(key)) {
 							options.segments.append(key, transformValue(segment[key]));
 						}
@@ -170,7 +143,7 @@ handyJS.ajax.request = function (options) {
 			options.data.forEach(function (segment, index) {
 				for (var key in segment) {
 					if (segment.hasOwnProperty(key)) {
-						var value = encodeUriStr(transformValue(segment[key]));
+						var value = encodeUriStr((transformValue(segment[key])));
 						if (index === 0) {
 							options.segments = options.segments + key + '=' + value;
 						} else {
@@ -189,13 +162,13 @@ handyJS.ajax.post = function (url, data, cb) {
 		method: 'POST',
 		url: url,
 		data: data,
-		onComplete: function onComplete() {
+		onComplete: function () {
 			//get response content types
 			var contentType = this.string.removeWhitespace(this.getResponseHeader('content-type').toLowerCase()).split(';');
 			//callback with probably variables.
-			if (contentType.indexOf('application/json') === -1) {
+			if(contentType.indexOf('application/json') === -1){
 				cb(this.responseText);
-			} else {
+			}else{
 				cb(JSON.parse(this.responseText));
 			}
 		}
