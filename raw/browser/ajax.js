@@ -164,7 +164,7 @@ handyJS.ajax.post = function (url, data, cb) {
 		data: data,
 		onComplete: function () {
 			//get response content types
-			var contentType = this.string.removeWhitespace(this.getResponseHeader('content-type').toLowerCase()).split(';');
+			var contentType = handyJS.string.removeWhitespace(this.getResponseHeader('content-type').toLowerCase()).split(';');
 			//callback with probably variables.
 			if(contentType.indexOf('application/json') === -1){
 				cb(this.responseText);
