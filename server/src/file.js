@@ -1,6 +1,4 @@
 'use strict';
-var handyJS = {};
-'use strict';
 
 //All bout file manipulate
 handyJS.file = {};
@@ -16,16 +14,3 @@ handyJS.file.changeName = function (originalName, newName) {
 	var extension = this.getExtension(originalName);
 	return newName + '.' + extension;
 };
-'use strict';
-
-handyJS.string = {};
-//remove whitespace, tab and new line
-handyJS.string.removeAllSpace = function (string) {
-	return string.replace(/\s/g, '');
-};
-//only remove whitespace
-handyJS.string.removeWhitespace = function (string) {
-	return string.replace(/ /g, '');
-};
-
-module.exports = handyJS;

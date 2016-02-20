@@ -1,5 +1,5 @@
 'use strict';
 var handyJS = {};
-//=include ./both/*.js
+//=include ../server/src/*.js
 
 module.exports = handyJS;

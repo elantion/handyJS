@@ -1,32 +1,9 @@
 'use strict';
+var handyJS = {};
+'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var handyJS = {};
-//All bout file manipulate
-handyJS.file = {};
-
-// sources:
-// http://stackoverflow.com/questions/190852/how-can-i-get-file-extensions-with-javascript
-handyJS.file.getExtension = function (fileName) {
-	return fileName.slice((Math.max(0, fileName.lastIndexOf('.')) || Infinity) + 1);
-};
-
-//usage: changeFileName('ding.js', 'dong'); => dong.js
-handyJS.file.changeName = function (originalName, newName) {
-	var extension = this.getExtension(originalName);
-	return newName + '.' + extension;
-};
-
-handyJS.string = {};
-//remove whitespace, tab and new line
-handyJS.string.removeAllSpace = function (string) {
-	return string.replace(/\s/g, '');
-};
-//only remove whitespace
-handyJS.string.removeWhitespace = function (string) {
-	return string.replace(/ /g, '');
-};
 handyJS.ajax = {};
 handyJS.ajax.request = function (options) {
 	var self = this;
@@ -191,7 +168,7 @@ handyJS.ajax.post = function (url, data, cb) {
 		data: data,
 		onComplete: function onComplete() {
 			//get response content types
-			var contentType = this.string.removeWhitespace(this.getResponseHeader('content-type').toLowerCase()).split(';');
+			var contentType = handyJS.string.removeWhitespace(this.getResponseHeader('content-type').toLowerCase()).split(';');
 			//callback with probably variables.
 			if (contentType.indexOf('application/json') === -1) {
 				cb(this.responseText);
@@ -200,4 +177,31 @@ handyJS.ajax.post = function (url, data, cb) {
 			}
 		}
 	});
+};
+'use strict';
+
+//All bout file manipulate
+handyJS.file = {};
+
+// sources:
+// http://stackoverflow.com/questions/190852/how-can-i-get-file-extensions-with-javascript
+handyJS.file.getExtension = function (fileName) {
+	return fileName.slice((Math.max(0, fileName.lastIndexOf('.')) || Infinity) + 1);
+};
+
+//usage: changeFileName('ding.js', 'dong'); => dong.js
+handyJS.file.changeName = function (originalName, newName) {
+	var extension = this.getExtension(originalName);
+	return newName + '.' + extension;
+};
+'use strict';
+
+handyJS.string = {};
+//remove whitespace, tab and new line
+handyJS.string.removeAllSpace = function (string) {
+	return string.replace(/\s/g, '');
+};
+//only remove whitespace
+handyJS.string.removeWhitespace = function (string) {
+	return string.replace(/ /g, '');
 };

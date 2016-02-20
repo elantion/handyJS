@@ -1,8 +1,11 @@
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 handyJS.ajax = {};
 handyJS.ajax.request = function (options) {
 	var self = this;
-	var blankFun = function () {
-	};
+	var blankFun = function blankFun() {};
 	self.xhr = new XMLHttpRequest();
 	if (options.method === undefined) {
 		options.method = 'GET';
@@ -24,7 +27,7 @@ handyJS.ajax.request = function (options) {
 			options.data.forEach(function (segment) {
 				if (segment === null) {
 					throw Error('Do not send null variable.');
-				} else if (typeof segment === 'object') {
+				} else if ((typeof segment === 'undefined' ? 'undefined' : _typeof(segment)) === 'object') {
 					for (var key in segment) {
 						if (segment.hasOwnProperty(key)) {
 							if (segment[key] === undefined) {
@@ -36,8 +39,7 @@ handyJS.ajax.request = function (options) {
 									break;
 								}
 								if (options.enctype.toUpperCase() !== 'FORMDATA') {
-									throw Error('You have to set dataForm to \'FormData\'' +
-										' because you about to send file, or just ignore this property.');
+									throw Error('You have to set dataForm to \'FormData\'' + ' because you about to send file, or just ignore this property.');
 								}
 							}
 							if (options.enctype === undefined) {
@@ -54,15 +56,15 @@ handyJS.ajax.request = function (options) {
 		}
 	}
 	//transform some type of value
-	var transformValue = function (value) {
+	var transformValue = function transformValue(value) {
 		if (value === null) {
 			return '';
 		}
 		if (value === undefined) {
 			return '';
 		}
-		switch (typeof value) {
-			case 'object' :
+		switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
+			case 'object':
 				if (value instanceof Blob) {
 					return value;
 				} else {
@@ -71,13 +73,13 @@ handyJS.ajax.request = function (options) {
 				break;
 			case 'string':
 				return value;
-			default :
+			default:
 				return value;
 		}
 	};
 	//encode uri string
 	//Copied from MDN, if wrong, pls info me.
-	var encodeUriStr = function (str) {
+	var encodeUriStr = function encodeUriStr(str) {
 		return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
 			return '%' + c.charCodeAt(0).toString(16);
 		});
@@ -103,16 +105,16 @@ handyJS.ajax.request = function (options) {
 			console.log('Encode data as FormData type.');
 			options.segments = new FormData();
 			options.data.forEach(function (segment) {
-				if(segment.fileName){
-					for (let key in segment) {
+				if (segment.fileName) {
+					for (var key in segment) {
 						if (segment.hasOwnProperty(key)) {
-							if(key !== 'fileName'){
+							if (key !== 'fileName') {
 								options.segments.append(key, segment[key], segment.fileName);
 							}
 						}
 					}
-				}else{
-					for (let key in segment) {
+				} else {
+					for (var key in segment) {
 						if (segment.hasOwnProperty(key)) {
 							options.segments.append(key, transformValue(segment[key]));
 						}
@@ -143,7 +145,7 @@ handyJS.ajax.request = function (options) {
 			options.data.forEach(function (segment, index) {
 				for (var key in segment) {
 					if (segment.hasOwnProperty(key)) {
-						var value = encodeUriStr((transformValue(segment[key])));
+						var value = encodeUriStr(transformValue(segment[key]));
 						if (index === 0) {
 							options.segments = options.segments + key + '=' + value;
 						} else {
@@ -162,16 +164,15 @@ handyJS.ajax.post = function (url, data, cb) {
 		method: 'POST',
 		url: url,
 		data: data,
-		onComplete: function () {
+		onComplete: function onComplete() {
 			//get response content types
 			var contentType = handyJS.string.removeWhitespace(this.getResponseHeader('content-type').toLowerCase()).split(';');
 			//callback with probably variables.
-			if(contentType.indexOf('application/json') === -1){
+			if (contentType.indexOf('application/json') === -1) {
 				cb(this.responseText);
-			}else{
+			} else {
 				cb(JSON.parse(this.responseText));
 			}
 		}
 	});
 };
-
