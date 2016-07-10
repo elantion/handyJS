@@ -27,5 +27,6 @@ handyJS.string.removeAllSpace = function (string) {
 handyJS.string.removeWhitespace = function (string) {
 	return string.replace(/ /g, '');
 };
+"use strict";
 
 module.exports = handyJS;

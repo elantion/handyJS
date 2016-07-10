@@ -114,9 +114,9 @@ handyJS.ajax.request = function (options) {
 						}
 					}
 				} else {
-					for (var key in segment) {
-						if (segment.hasOwnProperty(key)) {
-							options.segments.append(key, transformValue(segment[key]));
+					for (var _key in segment) {
+						if (segment.hasOwnProperty(_key)) {
+							options.segments.append(_key, transformValue(segment[_key]));
 						}
 					}
 				}
